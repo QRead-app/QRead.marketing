@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRead - Enterprise Library Management Solution</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            overflow-x: hidden;
+            background: #ffffff;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 1.2rem 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+        }
+
+        .logo span {
+            color: #3b82f6;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #3b82f6;
+        }
+
+        .cta-button {
+            background: #3b82f6;
+            color: white;
+            padding: 0.7rem 1.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 6% 4rem;
+            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+            margin-top: 70px;
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            margin-bottom: 3rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: #eff6ff;
+            color: #3b82f6;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid #dbeafe;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            color: #0f172a;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .hero h1 .highlight {
+            color: #3b82f6;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #64748b;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .btn-primary, .btn-secondary, .btn-download {
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #475569;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+
+        .btn-download {
+            background: #10b981;
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-download:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        /* Video Container */
+        .video-container {
+            position: relative;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-label {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .video-label p {
+            color: #64748b;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Trust Badges */
+        .trust-badges {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 3rem;
+            padding-top: 3rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            color: #64748b;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .trust-icon {
+            color: #3b82f6;
+            font-size: 1.2rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 6%;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-badge {
+            color: #3b82f6;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-size: 1.15rem;
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: #f8fafc;
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+            border-color: #3b82f6;
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #0f172a;
+        }
+
+        .feature-card p {
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 6rem 6%;
+            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .step h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #0f172a;
+        }
+
+        .step p {
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        /* Target Audience */
+        .target-audience {
+            padding: 6rem 6%;
+            background: #0f172a;
+            color: white;
+        }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .audience-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        .audience-card:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: #3b82f6;
+            transform: translateY(-4px);
+        }
+
+        .audience-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .audience-card p {
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            padding: 6rem 6%;
+            background: white;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .tech-item {
+            text-align: center;
+            padding: 2rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .tech-item h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.7rem;
+            color: #0f172a;
+        }
+
+        .tech-item p {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 6%;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            text-align: center;
+            color: white;
+        }
+
+        .cta-section h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .cta-section p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-section .btn-primary {
+            background: white;
+            color: #3b82f6;
+        }
+
+        .cta-section .btn-primary:hover {
+            background: #f8fafc;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            color: white;
+            padding: 4rem 6%;
+        }
+
+        .footer-content {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .footer-brand p {
+            color: #94a3b8;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .team-section h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        .team-members {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+
+        .team-member {
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .hero-buttons {
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .trust-badges {
+            animation: fadeInUp 1s ease 0.6s backwards;
+        }
+
+        .video-container {
+            animation: fadeInUp 1s ease 0.5s backwards;
+        }
+
+        .feature-card {
+            animation: fadeInUp 0.8s ease backwards;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+        .feature-card:nth-child(5) { animation-delay: 0.5s; }
+        .feature-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .step {
+            animation: fadeInUp 0.8s ease backwards;
+        }
+
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.3s; }
+        .step:nth-child(3) { animation-delay: 0.4s; }
+        .step:nth-child(4) { animation-delay: 0.5s; }        
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .trust-badges {
+                flex-direction: column;
+                gap: 1.5rem;
+                align-items: flex-start;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo"><span>Q</span>Read</div>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#audience">Solutions</a></li>
+            <li><a href="#tech">Technology</a></li>
+        </ul>
+        <a href="#contact" class="cta-button">Request Demo</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">🚀 Modern Library Management</div>
+                <h1>The Future of <span class="highlight">Library Operations</span></h1>
+                <p>Enterprise-grade book borrowing system powered by QR technology and biometric security. Eliminate queues, reduce overhead and deliver exceptional patron experiences.</p>
+                <div class="hero-buttons">
+                    <a href="#features" class="btn-primary">
+                        <span>Explore Platform</span>
+                        <span>→</span>
+                    </a>
+                    <a href="https://qread-app.github.io/" class="btn-secondary" target="_blank" rel="noopener noreferrer">View Documentation</a>
+                    <a href="https://drive.google.com/drive/folders/1UaKD9TktBnEsyzYFTTJiFhFCP0QmXTzZ?usp=drive_link" 
+                        class="btn-download"
+                        target="_blank" 
+                        rel="noopener noreferrer">
+                        <span>⬇</span>
+                        <span>Download App</span>
+                    </a>
+                </div>
+                <div class="trust-badges">
+                    <div class="trust-item">
+                        <span class="trust-icon">✓</span>
+                        <span>Enterprise Security</span>
+                    </div>
+                    <div class="trust-item">
+                        <span class="trust-icon">✓</span>
+                        <span>Cross-Platform</span>
+                    </div>
+                    <div class="trust-item">
+                        <span class="trust-icon">✓</span>
+                        <span>Smart Tracking & Reminders</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Container -->
+            <div class="video-container">
+                <div class="video-wrapper">
+                    <iframe 
+                        title="QRead in Action — Complete Walkthrough"
+                        src="https://player.vimeo.com/video/9011932" 
+                        width="700" 
+                        height="395" 
+                        frameborder="0" 
+                        allow="autoplay; fullscreen; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-label">
+                    <p>See QRead in Action — Complete Walkthrough</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header">
+            <div class="section-badge">POWERFUL FEATURES</div>
+            <h2 class="section-title">Everything You Need to Modernise</h2>
+            <p class="section-subtitle">Comprehensive tools designed for operational excellence and patron satisfaction</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>QR Code Borrowing</h3>
+                <p>Enable instant, contactless checkouts with unique QR codes. Eliminate manual processes and reduce patron wait times by up to 90%.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Biometric Authentication</h3>
+                <p>Industry level security with fingerprint and facial recognition. Ensure only authorised users complete transactions.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Self-Service Workflow</h3>
+                <p>Complete borrowing workflow on mobile devices. No kiosks, no staff intervention, no infrastructure costs.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Smart Tracking & Reminders</h3>
+                <p>Automated due date notifications, borrowing history and extension requests. Keep patrons informed and reduce overdue rates.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💳</div>
+                <h3>Integrated Payments</h3>
+                <p>Seamless fine management with PayNow integration.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3>Unified Platform</h3>
+                <p>iOS, Android and web applications with synchronised data. One system, unlimited accessibility.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="section-header">
+            <div class="section-badge">SIMPLE PROCESS</div>
+            <h2 class="section-title">Four Steps to Digital Lending</h2>
+            <p class="section-subtitle">Streamlined workflow that takes seconds, not minutes</p>
+        </div>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Secure Registration</h3>
+                <p>Users register with email verification and two-factor authentication.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Scan QR Code</h3>
+                <p>Mobile camera scans unique QR code on book back. Instant retrieval of availability and borrowing terms.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Biometric Verification</h3>
+                <p>Fingerprint or facial recognition confirms identity. Transaction logged with full audit trail.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Track & Manage</h3>
+                <p>Automated reminders, extension requests and digital return process through intuitive dashboard.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Audience -->
+    <section class="target-audience" id="audience">
+        <div class="section-header">
+            <div class="section-badge" style="color: #93c5fd;">INDUSTRY SOLUTIONS</div>
+            <h2 class="section-title" style="color: white;">Built for Scale, Designed for Versatility</h2>
+            <p class="section-subtitle" style="color: #cbd5e1;">Trusted by institutions worldwide for mission-critical operations</p>
+        </div>
+        <div class="audience-grid">
+            <div class="audience-card">
+                <h3>📚 Public Libraries</h3>
+                <p>Reduce operational costs by 40% while improving patron satisfaction. Handle peak traffic without additional staff or infrastructure.</p>
+            </div>
+            <div class="audience-card">
+                <h3>🎓 Academic Institutions</h3>
+                <p>Support thousands of concurrent users with real-time inventory sync. Integrate with existing student ID systems and LMS platforms.</p>
+            </div>
+            <div class="audience-card">
+                <h3>🏢 Corporate Libraries</h3>
+                <p>Deploy in days, not months. Scalable SaaS solution with enterprise SSO, custom branding and dedicated support.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="tech-stack" id="tech">
+        <div class="section-header">
+            <div class="section-badge">ENTERPRISE ARCHITECTURE</div>
+            <h2 class="section-title">Built on Industry-Leading Technologies</h2>
+            <p class="section-subtitle">Robust, scalable, and secure infrastructure designed for mission-critical operations</p>
+        </div>
+        <div class="tech-grid">
+            <div class="tech-item">
+                <h4>Mobile Application</h4>
+                <p>React Native + TypeScript + Expo</p>
+            </div>
+            <div class="tech-item">
+                <h4>Web Platform</h4>
+                <p>React + Vite + Tailwind CSS</p>
+            </div>
+            <div class="tech-item">
+                <h4>Backend Services</h4>
+                <p>Flask (Python) + RESTful API</p>
+            </div>
+            <div class="tech-item">
+                <h4>Database</h4>
+                <p>PostgreSQL + NeonDB Cloud</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact">
+        <h2>Ready to Transform Your Library?</h2>
+        <p>Join forward-thinking institutions leveraging QRead's B2B SaaS platform. Schedule a personalised demo today.</p>
+        <a href="https://qread-app.github.io/" class="btn-primary" target="_blank" rel="noopener noreferrer">Request Enterprise Demo</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>QRead</h3>
+                    <p>Enterprise library management solution combining QR technology and biometric security.</p>
+                    <p style="font-size: 0.9rem; margin-top: 1rem;">
+                        <strong>Academic Supervision:</strong><br>
+                        Supervisor: Sionggo Japit<br>
+                        Assessor: Dr. Loo Poh Kok
+                    </p>
+                </div>
+                <div class="team-section">
+                    <h4>Development Team</h4>
+                    <div class="team-members">
+                        <span class="team-member">Neo Wayne (8039045)<br>wneo003@mymail.sim.edu.sg</span>
+                        <span class="team-member">Kayne Juro Chandra (8039124)<br>kjchandr001@mymail.sim.edu.sg</span>
+                        <span class="team-member">Ryu Hyeri (8221674)<br>ryu011@mymail.sim.edu.sg</span>
+                        <span class="team-member">Abdul Aziz Bin Adil (8333518)<br>abdulaba001@mymail.sim.edu.sg</span>
+                        <span class="team-member">Lee Looi Yen (9070904)<br>lylee016@mymail.sim.edu.sg</span>
+                    </div>
+                </div>
+                <div class="team-section">
+                    <h4>Resources</h4>
+                    <div class="team-members">
+                        <span class="team-member"><a href="https://qread-app.github.io/" style="color: #94a3b8; text-decoration: none;" target="_blank" rel="noopener noreferrer">Project Website</a></span>
+                        <span class="team-member"><a href="#" style="color: #94a3b8; text-decoration: none;">Documentation</a></span>
+                        <span class="team-member"><a href="#" style="color: #94a3b8; text-decoration: none;">API Reference</a></span>
+                        <span class="team-member"><a href="#" style="color: #94a3b8; text-decoration: none;">Support Portal</a></span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 QRead. Final Year Project — UOW FYP-25-S3-24</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
